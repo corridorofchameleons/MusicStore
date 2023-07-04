@@ -1,4 +1,4 @@
-# Hello everyone
+## Hello everyone!
 As my pet project I decided to make an online store of musical equipment.
 Written on the Django Framework, it includes almost all of its basic features such as models with all kinds of relations, view fuctions and classes, forms, lightly customized admin panel, registering/deleting/updating user accounts and pagination.
 
