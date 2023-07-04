@@ -1,0 +1,79 @@
+{% extends 'BASE.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="product-view content-center">
+<h2>{{ product.title }}</h2>
+<p>Rating: {{ avg_rating }} / 5</p>
+<div class="images" styles="max-width: 500px;">
+    {% if product.pic %}
+    <img src="{{ product.pic.url }}" style="max-width: 500px; max-height: 350px;">
+    {% endif %}
+    {% if product.image_set %}
+            {% for image in product.image_set.all %}
+            <img src="{{ image.image.url }}" style="max-width: 500px; max-height: 350px;">
+            {% endfor %}
+    {% endif %}
+    <p class="description">{{ product.description }}</p>
+    <p class="manufacturer">Manufacturer: {{ product.brand.brand }}</p>
+    <p class="price">Price: {{ product.price }}</p>
+    {% if product.stock %}
+    <p class="available">Available: {{ product.stock }}</p>
+    {% if user.is_authenticated %}
+        {% if in_cart %}
+        <h3>In cart</h3>
+        {% else %}
+        <form method="post" action="{% url 'cart_add' product.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="button">Add to cart</button>
+        </form>
+        {% endif %}
+    {% else %}
+        <a href="{% url 'login' %}">Authorize to order</a>
+    {% endif %}
+    {% else %}
+    <p class="available">Not available</p>
+    {% endif %}
+</div>
+<div class="reviews">
+    <h3>Reviews: </h3>
+    {% if reviews %}
+    {% for review in reviews %}
+    <div class="review-top">
+        <p>{{ review.created_at|date:'d.m.Y H:i' }}</p>
+        <p><strong>{{ review.author }}</strong></p>
+        <p>Score: {{ review.rating }}</p>
+    </div>
+    <p class="review-text">{{ review.content }}</p>
+    {% endfor %}
+    {% else %}
+    <p>No reviews yet</p>
+    {% endif %}
+    <div class="add-review">
+    <h4>Add review</h4>
+    {% if user.is_authenticated %}
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            <div class="form-sector">
+            <div class="form-rating"><p>{{ form.rating.label }}</p>
+                <div class="select-rating">
+                {% for f in form.rating %}
+                <li>{{ f }}</li>
+                {% endfor %}
+                </div>
+            </div>
+            <div class="form-review"><p>{{ form.content.label }}</p><form>{{ form.content }}</form></div>
+            </div>
+        </table>
+        <button class="button" type="submit">Add review</button>
+        {{ form.errors }}
+    </form>
+    {% else %}
+    <p>Only authorised users can add reviews</p>
+    {% endif %}
+    </div>
+</div>
+</div>
+{% endblock %}

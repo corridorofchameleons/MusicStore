@@ -1,0 +1,45 @@
+{% extends 'BASE.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="cart">
+
+<h2>Cart</h2>
+{% if cart %}
+<table width="700">
+    <tr>
+        <td>Item</td>
+        <td>Price</td>
+        <td>Quantity</td>
+        <td></td>
+        <td></td>
+    </tr>
+{% for item in cart %}
+    <tr>
+        <td><p>{{ item.product.title }}</p></td>
+        <td><p>{{ item.product.price }}</p></td>
+        <td><form method="post" action="{% url 'cart_update' item.product.pk %}">
+            {% csrf_token %}
+            <input type="number" name="qty" required id="id_qty" value="{{ item.qty }}">
+            <button type="submit" class="button">update</button>
+        </form></td>
+        <td><form method="post" action="{% url 'cart_delete' item.product.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="button">delete</button>
+        </form></td>
+    </tr>
+{% endfor %}
+</table>
+<h4>Total: {{ total }}</h4>
+<form method="post" action="{% url 'order_view' %}">
+    {% csrf_token %}
+    <button type="submit" class="button">Order</button>
+</form>
+{% else %}
+<p>Cart is empty</p>
+{% endif %}
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'BASE.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="order-succ">
+<h2>My orders</h2>
+{% for order in orders %}
+    <h3>Order # {{ order.order_number }}</h3>
+    {% for product in order.items.all %}
+    <div class="order-cont">
+        <p class="p-orders">{{ product.product.title }}</p>
+        <p class="p-orders">{{ product.product.price }}</p>
+        <p class="p-orders">{{ product.qty }}</p>
+    </div>
+    {% endfor %}
+{% endfor %}
+</div>
+{% endblock %}

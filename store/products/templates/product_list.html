@@ -1,0 +1,74 @@
+{% extends 'BASE.html' %}
+{% load spurl %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="content-center">
+    {% for p in products %}
+    <div class="products">
+        <a href="{% url 'product_view' p.slug %}"><h2>{{ p.title }}</h2></a>
+        <a href="{% url 'product_view' p.slug %}">
+            <img src="{{ p.pic.url }}" style="max-width: 250px; max-height: 200px;">
+        </a>
+        <div class="products-desc">
+        <p>Price: {{ p.price }}</p>
+        {% if p.stock %}
+        <p>Available: {{ p.stock }}</p>
+            {% if user.is_authenticated %}
+                {% if p in cart %}
+                <h4>In cart</h4>
+                {% else %}
+                <form method="post" action="{% url 'cart_add' p.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" class="button">Add to cart</button>
+                </form>
+                {% endif %}
+            {% else %}
+                <a href="{% url 'login' %}">Authorize to order</a>
+            {% endif %}
+        {% else %}
+        <p>Not in stock</p>
+        {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    <nav class="paginate">
+        <ul>
+        {% if page_obj.has_other_pages %}
+            {% if page_obj.has_previous %}
+                <li>
+                    <a href="{% spurl query=request.GET set_query='page={{ page_obj.previous_page_number }}'%}">&lt;</a>
+                </li>
+            {% endif %}
+            {% for p in page_obj.paginator.page_range %}
+            {% if page_obj.number == p %}
+                <li class="page_selected">{{ p }}</li>
+                {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                <li>
+                    <a href="{% spurl query=request.GET set_query='page={{ p }}'%}">{{ p }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+                {% if page_obj.has_next %}
+                <li>
+                    <a href="{% spurl query=request.GET set_query='page={{ page_obj.next_page_number }}'%}">&gt;</a>
+                </li>
+            {% endif %}
+        {% endif %}
+        </ul>
+    </nav>
+</div>
+<div class="filter-right">
+    <form method="GET">
+        <h3>Sort by</h3>
+        <p class="sort">{{ form_filter.o }}</p>
+        <h3>Filter</h3>
+        <p>{{ form_filter.brand.label }}</p>
+        {{ form_filter.brand }}
+        <p>{{ form_filter.price.label }}</p>
+        {{ form_filter.price }}
+        {{ form_filter.title }}
+        <input type="submit" value="Filter" class="button filter-button">
+    </form>
+</div>
+{% endblock %}

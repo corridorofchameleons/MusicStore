@@ -1,0 +1,13 @@
+{% extends 'BASE.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="order-succ">
+<h2>Order # {{ order_number }} created successfully</h2>
+<div class="buttons">
+<a href="{% url 'my_orders' %}" class="button">To my orders</a>
+<a href="{% url 'home' %}" class="button">Home</a>
+</div>
+</div>
+{% endblock %}

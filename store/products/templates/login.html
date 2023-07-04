@@ -1,0 +1,16 @@
+{% extends 'BASE.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<form method="post" class="form">
+    {% csrf_token %}
+    {% for f in form %}
+    <div class="form-input">
+      <p class="form-label">{{ f.label }}</p>
+      {{ f }}
+    </div>
+    {% endfor %}
+    <button type="submit" class="button">Login</button>
+</form>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'BASE.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<ul class="profile">
+    <li><a href="{% url 'change_info' %}">Change personal information</a></li>
+    <li><a href="{% url 'change_password' %}">Change password</a></li></br>
+    <li><a href="{% url 'cart_view' %}">My cart</a></li>
+    <li><a href="{% url 'my_orders' %}">Recent orders</a></li></br>
+    <li><a href="{% url 'delete_user' %}">Delete my account</a></li>
+</ul>
+{% endblock %}

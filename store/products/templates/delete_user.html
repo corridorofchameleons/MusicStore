@@ -1,0 +1,12 @@
+{% extends 'BASE.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<form method="post">
+<h3>You sure?</h3>
+    {% csrf_token %}
+    <button type="submit" class="button">Yes, I am!</button>
+    <a href="{% url 'profile' %}" class="button">Actually not</a>
+</form>
+{% endblock %}
