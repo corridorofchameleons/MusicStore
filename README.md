@@ -30,7 +30,7 @@ You can put an item into a cart already at this point if you've logged in.
 ## Product description page
 
 On this page we can find:
-1. more detailed information about a product. 
+1. More detailed information about a product. 
 2. To the bottom from the main block there's a Review Form, where, if you're logged in, you can leave a comment and set from 1 to 5 stars. That value will be instantly added into calculation of the average rating, shown on the top.
    
 
