@@ -15,7 +15,7 @@ And **MySQL** is used as a database management system.
 
 ## Main page
 
-We start on the main page. Here we have all of our products, paginated by 6 items. 
+We start at the main page. Here we have all of our products, paginated by 6 items. 
 1. Initially items are not sorted in order to simplify the query.
 But you can filter and change the order of items on the right panel.
 2. On the left panel you can navigate through categories.
